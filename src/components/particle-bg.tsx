@@ -14,6 +14,11 @@ export default function ParticleBg() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    // Disable canvas entirely on mobile to prevent GPU pixelated static corruption and save battery
+    if (window.innerWidth < 768) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -156,7 +161,7 @@ export default function ParticleBg() {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 -z-20 h-full w-full opacity-60"
+      className="pointer-events-none fixed inset-0 -z-20 h-full w-full opacity-60 hidden md:block"
     />
   );
 }
